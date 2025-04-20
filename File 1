@@ -1,0 +1,72 @@
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import Dense
+
+# Step 1: Generate Synthetic Data
+np.random.seed(42)
+n_samples = 1000
+
+# Synthetic features (you can customize these)
+elevation = np.random.uniform(0, 3000, n_samples)           # in meters
+slope = np.random.uniform(0, 90, n_samples)                 # in degrees
+rainfall = np.random.uniform(0, 500, n_samples)             # in mm
+soil_type = np.random.randint(0, 5, n_samples)              # categorical 0-4
+vegetation_index = np.random.uniform(0, 1, n_samples)       # NDVI 0-1
+
+# Risk label: Create some synthetic pattern
+risk = (slope > 30).astype(int) + (rainfall > 300).astype(int) + (vegetation_index < 0.3).astype(int)
+risk = (risk >= 2).astype(int)  # Binary classification: 1 = high risk, 0 = low risk
+
+# Combine into a dataframe
+df = pd.DataFrame({
+    'elevation': elevation,
+    'slope': slope,
+    'rainfall': rainfall,
+    'soil_type': soil_type,
+    'vegetation_index': vegetation_index,
+    'risk': risk
+})
+
+# Step 2: Preprocess Data
+X = df.drop('risk', axis=1)
+y = df['risk']
+
+# One-hot encode soil type
+X = pd.get_dummies(X, columns=['soil_type'])
+
+# Scale features
+scaler = StandardScaler()
+X_scaled = scaler.fit_transform(X)
+
+# Split data
+X_train, X_test, y_train, y_test = train_test_split(X_scaled, y, test_size=0.2, random_state=42)
+
+# Step 3: Build Neural Network
+model = Sequential([
+    Dense(16, input_dim=X_train.shape[1], activation='relu'),
+    Dense(8, activation='relu'),
+    Dense(1, activation='sigmoid')  # Output layer for binary classification
+])
+
+model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
+
+# Step 4: Train the Model
+history = model.fit(X_train, y_train, epochs=30, batch_size=32, validation_split=0.2, verbose=1)
+
+# Step 5: Evaluate
+loss, accuracy = model.evaluate(X_test, y_test)
+print(f"\nTest Accuracy: {accuracy * 100:.2f}%")
+
+# Step 6: Plot Training History
+plt.plot(history.history['accuracy'], label='Train Accuracy')
+plt.plot(history.history['val_accuracy'], label='Val Accuracy')
+plt.xlabel('Epoch')
+plt.ylabel('Accuracy')
+plt.title('Training History')
+plt.legend()
+plt.grid(True)
+plt.show()
