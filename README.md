@@ -89,4 +89,4 @@ Use geospatial libraries like rasterio or geopandas
 Deploy as a web app for interactive risk mapping
 
 👨‍💻 Author
-Tarinabo  williamtarinabo@gmail.com 
+William Tarinabo 
