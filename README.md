@@ -1,4 +1,4 @@
-🧠 Landslide Risk Prediction using Neural Networks
+🧠**Landslide Risk Prediction using Neural Networks**
 This project demonstrates how to build and train a neural network for predicting landslide risk using a synthetic dataset generated to simulate real-world geospatial and environmental data.
 
 📁 File Overview
@@ -14,7 +14,7 @@ Data export to Excel
 
 synthetic_landslide_data_with_predictions.xlsx – Output Excel file with synthetic data and model predictions
 
-🔧 Technologies Used
+🔧 **Requirements**
 Python 3.x
 
 TensorFlow / Keras
