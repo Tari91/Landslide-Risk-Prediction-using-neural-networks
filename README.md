@@ -63,20 +63,11 @@ Prints training and validation accuracy
 Shows plot of training history
 
 Saves Excel file with predictions:
-
-Copy
-Edit
 synthetic_landslide_data_with_predictions.xlsx
 ▶️ How to Run
 1. Install Dependencies
-bash
-Copy
-Edit
 pip install numpy pandas matplotlib scikit-learn tensorflow openpyxl
 2. Run the Script
-bash
-Copy
-Edit
 python landslide_prediction.py
 3. Output Files
 Check the generated Excel file in the project directory.
@@ -89,4 +80,4 @@ Use geospatial libraries like rasterio or geopandas
 Deploy as a web app for interactive risk mapping
 
 👨‍💻 Author
-William Tarinabo 
+Tarinabo williamtarinabo@gmail.com
